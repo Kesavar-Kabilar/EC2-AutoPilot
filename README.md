@@ -1,13 +1,14 @@
-# Machine Problem 2: Load Balancing + Auto Scaling
+# EC2-AutoPilot
 
-This assignment focused on implementing load balancing and auto-scaling using Amazon Web Services (AWS) EC2.
+In this project, I focused on implementing a system that automatically increases or decreases EC2 instances based on system load. The application simulates web traffic through POST & GET requests to mimic real-world usage. It demonstrates real-time resource management using AWS Auto Scaling and Load Balancing and it also provides visibility into scaling behavior via application-level feedback (ie: returning IP and triggering CPU stress). 
 
-## Assignment Overview
+## Overview
 
-The assignment was divided into two sections:
+This project is divided into two sections:
 
 1. **AWS Elastic Load Balancing (ELB)**: I set up a load balancer with a target group to distribute traffic between two web servers hosting a simple seed value application on Amazon EC2 instances.
-2. **Amazon EC2 Auto Scaling**: I ereated an auto-scaling group to dynamically adjust the number of EC2 instances based on CPU usage, hosting a slightly different application that responds with its IP address and can trigger CPU stress.
+2. **Amazon EC2 Auto Scaling**: I created an auto-scaling group to dynamically adjust the number of EC2 instances based on CPU usage, hosting a slightly different application that responds with its IP address and can trigger CPU stress.
+3. **Python Flask for sever**: I used a Flask server handles POST and GET requests, simulating incoming workloads. It acts as a lightweight backend deployed on EC2 instances to receive traffic and respond with relevant data.
 
 ### Section 1: Load Balancing
 
@@ -70,7 +71,7 @@ I created an auto-scaling group and configured it to use the launch template I c
 
 ## Load Balancer
 
-I configured the auto-scaling group to be associated with a *new* internet-facing load balancer (separate from the one in Section 1).  This separate load balancer is important for isolating the two sections of the assignment.
+I configured the auto-scaling group to be associated with a *new* internet-facing load balancer (separate from the one in Section 1).  This separate load balancer is important for isolating the two sections of the project.
 
 <img src="./imgs/Task2-LoadBalancer.png" width="800">
 
@@ -91,5 +92,6 @@ The auto-scaling group monitors the CPU utilization of the EC2 instances.  It us
 I configured a target tracking scaling policy to maintain average CPU utilization around 50%. The policy adds an instance when CPU usage exceeds 50% and removes one when it drops below 50%. A 300-second cooldown period prevents overly rapid scaling adjustments.
 
 ## Testing
+
 
 I tested the auto-scaling functionality by sending POST requests to the load balancer using Postman. I monitored CPU utilization with `htop` via SSH and verified that the auto-scaling group launched new instances when CPU usage exceeded 50%. I confirmed these instances automatically ran `serve.py` and responded to GET requests.  I also verified the group scaled down after the load decreased.
