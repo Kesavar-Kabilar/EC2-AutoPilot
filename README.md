@@ -8,7 +8,7 @@ This project is divided into two sections:
 
 1. **AWS Elastic Load Balancing (ELB)**: I set up a load balancer with a target group to distribute traffic between two web servers hosting a simple seed value application on Amazon EC2 instances.
 2. **Amazon EC2 Auto Scaling**: I created an auto-scaling group to dynamically adjust the number of EC2 instances based on CPU usage, hosting a slightly different application that responds with its IP address and can trigger CPU stress.
-3. **Python Flask for sever**: I used a Flask server handles POST and GET requests, simulating incoming workloads. It acts as a lightweight backend deployed on EC2 instances to receive traffic and respond with relevant data.
+3. **Python Flask for sever**: I used a Flask server to handle POST and GET requests, simulating incoming workloads. It acts as a lightweight backend deployed on EC2 instances to receive traffic and respond with relevant data.
 
 ### Section 1: Load Balancing
 
@@ -95,3 +95,4 @@ I configured a target tracking scaling policy to maintain average CPU utilizatio
 
 
 I tested the auto-scaling functionality by sending POST requests to the load balancer using Postman. I monitored CPU utilization with `htop` via SSH and verified that the auto-scaling group launched new instances when CPU usage exceeded 50%. I confirmed these instances automatically ran `serve.py` and responded to GET requests.  I also verified the group scaled down after the load decreased.
+
